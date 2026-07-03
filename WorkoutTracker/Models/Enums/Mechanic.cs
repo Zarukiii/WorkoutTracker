@@ -1,8 +1,11 @@
-﻿namespace WorkoutTracker.Models.Enums
+﻿using SQLite;
+
+namespace WorkoutTracker.Models.Enums
 {
+    [StoreAsText]
     public enum Mechanic
     {
-        Compound,
-        Isolation
+        Compound = 0,
+        Isolation = 1
     }
 }

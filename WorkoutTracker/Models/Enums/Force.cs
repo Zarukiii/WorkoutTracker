@@ -1,9 +1,12 @@
-﻿namespace WorkoutTracker.Models.Enums
+﻿using SQLite;
+
+namespace WorkoutTracker.Models.Enums
 {
+    [StoreAsText]
     public enum Force
     {
-        Push,
-        Pull,
-        Static
+        Push = 0,
+        Pull = 1,
+        Static = 2
     }
 }

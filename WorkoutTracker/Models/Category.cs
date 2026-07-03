@@ -1,12 +1,14 @@
-﻿namespace WorkoutTracker.Models
+﻿using SQLite;
+
+namespace WorkoutTracker.Models
 {
-    public class Category
+    [Table("Categories")]
+    public class Category : BaseModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public bool IsActive { get; set; }
+        [NotNull, MaxLength(100), Collation("NOCASE")]
+        [Indexed(Name = "UX_Categories_Name", Unique = true)]
+        public string Name { get; set; } = string.Empty;
+
         public bool IsCustom { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
     }
 }

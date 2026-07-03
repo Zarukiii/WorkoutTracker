@@ -1,12 +1,14 @@
-﻿namespace WorkoutTracker.Models
+﻿using SQLite;
+
+namespace WorkoutTracker.Models
 {
-    public class Muscle
+    [Table("Muscles")]
+    public class Muscle : BaseModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public bool IsActive { get; set; }
+        [NotNull, MaxLength(60), Collation("NOCASE")]
+        [Indexed(Name = "UX_Muscles_Name", Unique = true)]
+        public string Name { get; set; } = string.Empty;
+
         public bool IsCustom { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
     }
 }
