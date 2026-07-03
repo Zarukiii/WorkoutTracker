@@ -1,9 +1,12 @@
-﻿namespace WorkoutTracker.Models.Enums
+﻿using SQLite;
+
+namespace WorkoutTracker.Models.Enums
 {
+    [StoreAsText]
     public enum DifficultyLevel
     {
-        Beginner,
-        Intermediate,
-        Expert
+        Beginner = 0,
+        Intermediate = 1,
+        Expert = 2
     }
 }

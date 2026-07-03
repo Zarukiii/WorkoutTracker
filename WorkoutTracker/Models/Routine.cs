@@ -1,12 +1,17 @@
-﻿namespace WorkoutTracker.Models
+﻿using SQLite;
+
+namespace WorkoutTracker.Models
 {
-    public class Routine
+    [Table("Routines")]
+    public class Routine : BaseModel
     {
-        public int Id { get; set; }
-        public required string Name { get; set; }
+        [NotNull, MaxLength(100), Collation("NOCASE")]
+        public string Name { get; set; } = string.Empty;
+
+        [MaxLength(500)]
         public string? Description { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+
+        [Ignore]
+        public List<RoutineExercise> Exercises { get; set; } = [];
     }
 }

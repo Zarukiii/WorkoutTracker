@@ -1,22 +1,39 @@
-﻿using WorkoutTracker.Models.Enums;
+﻿using SQLite;
+using WorkoutTracker.Models.Enums;
 
 namespace WorkoutTracker.Models
 {
-    public class Exercise
+    [Table("Exercises")]
+    public class Exercise : BaseModel
     {
-        public int Id { get; set; }
-        public required string Name { get; set; }
+        [NotNull, MaxLength(100), Collation("NOCASE")]
+        public string Name { get; set; } = string.Empty;
+
         public Force? Force { get; set; }
         public DifficultyLevel? Level { get; set; }
         public Mechanic? Mechanic { get; set; }
+
+        [Indexed]
+        public int? EquipmentId { get; set; }
+
+        [Ignore]
         public Equipment? Equipment { get; set; }
+
+        [Ignore]
         public List<Muscle> PrimaryMuscles { get; set; } = [];
+
+        [Ignore]
         public List<Muscle> SecondaryMuscles { get; set; } = [];
-        public List<string> Instructions { get; set; } = [];
+
+        [Ignore]
+        public List<ExerciseInstruction> Instructions { get; set; } = [];
+
+        [Indexed]
+        public int? CategoryId { get; set; }
+
+        [Ignore]
         public Category? Category { get; set; }
-        public bool IsActive { get; set; }
+
         public bool IsCustom { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
     }
 }

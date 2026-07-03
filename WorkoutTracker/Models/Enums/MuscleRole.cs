@@ -3,9 +3,9 @@
 namespace WorkoutTracker.Models.Enums
 {
     [StoreAsText]
-    public enum Mechanic
+    public enum MuscleRole
     {
-        Compound = 0,
-        Isolation = 1
+        Primary = 0,
+        Secondary = 1
     }
 }
