@@ -2,7 +2,7 @@
 
 namespace WorkoutTracker.Data
 {
-    public class DbContants
+    public class DbConstants
     {
         public const string DbFilename = "WorkoutTracker.db3";
 

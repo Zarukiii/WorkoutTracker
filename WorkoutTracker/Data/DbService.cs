@@ -6,28 +6,55 @@ namespace WorkoutTracker.Data
     public class DbService
     {
         private SQLiteAsyncConnection? _db;
+        private readonly SemaphoreSlim _initLock = new(1, 1);
 
-        private async Task<SQLiteAsyncConnection> GetConnectionAsync()
+        public async Task<SQLiteAsyncConnection> GetConnectionAsync()
         {
             if (_db is not null)
                 return _db;
 
-            var connectionString = new SQLiteConnectionString(
-                DbContants.DbPath,
-                DbContants.Flags,
-                storeDateTimeAsTicks: true);
+            await _initLock.WaitAsync();
 
-            _db = new SQLiteAsyncConnection(connectionString);
+            try
+            {
+                if (_db is not null)
+                    return _db;
 
-            await _db.CreateTableAsync<Exercise>();
-            await _db.CreateTableAsync<RoutineExercise>();
-            await _db.CreateTableAsync<Routine>();
-            await _db.CreateTableAsync<Equipment>();
-            await _db.CreateTableAsync<Category>();
-            await _db.CreateTableAsync<Muscle>();
-            await _db.CreateTableAsync<ExerciseMuscle>();
+                var connectionString = new SQLiteConnectionString(
+                    DbConstants.DbPath,
+                    DbConstants.Flags,
+                    storeDateTimeAsTicks: true);
 
-            return _db;
+                var db = new SQLiteAsyncConnection(connectionString);
+
+                await InitializeAsync(db);
+
+                _db = db;
+
+                return _db;
+            }
+            finally
+            {
+                _initLock.Release();
+            }
+        }
+
+        private static async Task InitializeAsync(SQLiteAsyncConnection db)
+        {
+            await db.CreateTablesAsync(CreateFlags.None,
+                typeof(Category),
+                typeof(Equipment),
+                typeof(Exercise),
+                typeof(ExerciseInstruction),
+                typeof(ExerciseMuscle),
+                typeof(Muscle),
+                typeof(Routine),
+                typeof(RoutineExercise),
+                typeof(SessionExercise),
+                typeof(WorkoutSession),
+                typeof(WorkoutSet));
+
+            await DatabaseSeeder.SeedIfEmptyAsync(db);
         }
     }
 }
