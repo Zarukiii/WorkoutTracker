@@ -1,9 +1,10 @@
 ﻿using SQLite;
+using WorkoutTracker.Data.Abstractions;
 using WorkoutTracker.Models;
 
 namespace WorkoutTracker.Data
 {
-    public class DbService
+    public class DbService : IDbService
     {
         private SQLiteAsyncConnection? _db;
         private readonly SemaphoreSlim _initLock = new(1, 1);
