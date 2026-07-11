@@ -18,7 +18,10 @@ namespace WorkoutTracker
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<DbService>();
+            builder.Services.AddSingleton<IDbService, DbService>();
+
+            builder.Services.AddSingleton<IExerciseRepository, ExerciseRepository>();
+            builder.Services.AddSingleton<IMuscleRepository, MuscleRepository>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
