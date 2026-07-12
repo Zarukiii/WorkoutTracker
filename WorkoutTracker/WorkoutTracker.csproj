@@ -77,6 +77,9 @@
 	  <Folder Include="Models\" />
 	  <Folder Include="ViewModels\" />
 	  <Folder Include="Views\" />
+	  <MauiXaml Update="Views\ExercisesListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

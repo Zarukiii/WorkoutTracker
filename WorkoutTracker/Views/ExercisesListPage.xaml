@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WorkoutTracker.Views.ExercisesListPage"
+             Title="Exercises">
+    <Grid RowDefinitions="*, Auto">
+        <CollectionView ItemsSource="{Binding Exercises}"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding ExerciseSelectedCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding Name}" Padding="16,12"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ActivityIndicator Grid.Row="0"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"/>
+
+        <Button Grid.Row="1"
+                Text="Add exercise"
+                Command="{Binding AddExerciseCommand}"
+                Margin="16"/>
+    </Grid>
+</ContentPage>
