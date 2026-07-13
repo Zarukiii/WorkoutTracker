@@ -14,6 +14,16 @@ namespace WorkoutTracker.ViewModels
         [ObservableProperty]
         private bool _isBusy;
 
+        [ObservableProperty]
+        private string _searchText = string.Empty;
+
+        partial void OnSearchTextChanged(string value)
+        {
+            FilterExercises();
+        }
+
+        private IEnumerable<ExerciseListItem> _exercises = Enumerable.Empty<ExerciseListItem>();
+
         public ExerciseViewModel(IExerciseRepository exerciseRepository)
         {
             _exerciseRepository = exerciseRepository;
@@ -28,16 +38,27 @@ namespace WorkoutTracker.ViewModels
             {
                 IsBusy = true;
 
-                var items = await _exerciseRepository.GetExerciseListAsync();
+                _exercises = await _exerciseRepository.GetExerciseListAsync();
 
-                Exercises.Clear();
-                foreach (var item in items)
-                    Exercises.Add(item);
+                FilterExercises();
             }
             finally
             {
                 IsBusy = false;
             }
+        }
+
+        private void FilterExercises()
+        {
+            var query = _searchText?.Trim() ?? string.Empty;
+
+            var matches = string.IsNullOrEmpty(query)
+                ? _exercises
+                : _exercises.Where(e => e.Name.Contains(query, StringComparison.OrdinalIgnoreCase));
+
+            Exercises.Clear();
+            foreach (var item in matches)
+                Exercises.Add(item);
         }
     }
 }

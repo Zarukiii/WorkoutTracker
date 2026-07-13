@@ -72,13 +72,19 @@ namespace WorkoutTracker.Repositories
                 SELECT 
                     ex.Id,
                     ex.Name,
-                    cat.Name AS CategoryName,
-                    eq.Name AS EquipmentName
+                    cat.Name AS Category,
+                    eq.Name AS Equipment,
+                    m.Name AS PrimaryMuscle
                 FROM Exercises ex
                 LEFT JOIN Categories cat
                     ON ex.CategoryId = cat.Id
                 LEFT JOIN Equipments eq
                     ON ex.EquipmentId = eq.Id
+                LEFT JOIN ExerciseMuscles em
+                    ON ex.Id = em.ExerciseId
+                LEFT JOIN Muscles m
+                    ON em.MuscleId = m.Id
+                WHERE em.Role = 'Primary'
                 ORDER BY ex.Name";
 
             var exerciseList = await db.QueryAsync<ExerciseListItem>(query);
