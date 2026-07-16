@@ -34,7 +34,7 @@ public static class DatabaseSeeder
         var muscles = dtos.SelectMany(d => d.PrimaryMuscles.Concat(d.SecondaryMuscles))
             .Where(m => !string.IsNullOrWhiteSpace(m))
             .Distinct(comparer)
-            .Select(n => new Muscle { Name = n, CreatedAt = now, IsCustom = false })
+            .Select(n => new Muscle { Name = n, CreatedAt = now, IsFavorite = false, IsCustom = false })
             .ToList();
 
         await db.RunInTransactionAsync(tran =>
@@ -60,6 +60,7 @@ public static class DatabaseSeeder
                     Mechanic = ParseEnum<Mechanic>(dto.Mechanic),
                     CategoryId = string.IsNullOrWhiteSpace(dto.Category) ? null : catIds[dto.Category],
                     EquipmentId = string.IsNullOrWhiteSpace(dto.Equipment) ? null : equipIds[dto.Equipment],
+                    IsFavorite = false,
                     IsCustom = false,
                     CreatedAt = now
                 };

@@ -34,6 +34,7 @@ namespace WorkoutTracker.Models
         [Ignore]
         public Category? Category { get; set; }
 
+        public bool IsFavorite { get; set; }
         public bool IsCustom { get; set; }
     }
 }
