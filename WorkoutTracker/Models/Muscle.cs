@@ -9,6 +9,7 @@ namespace WorkoutTracker.Models
         [Indexed(Name = "UX_Muscles_Name", Unique = true)]
         public string Name { get; set; } = string.Empty;
 
+        public bool IsFavorite { get; set; }
         public bool IsCustom { get; set; }
     }
 }

@@ -21,6 +21,24 @@ namespace WorkoutTracker.Repositories
             return await db.Table<Muscle>().ToListAsync();
         }
 
+        public async Task<IEnumerable<Muscle>> GetListAsync()
+        {
+            var db = await _dbService.GetConnectionAsync();
+
+            string query = @"
+                SELECT 
+                    m.Id,
+                    m.Name,
+                    m.IsFavorite,
+                    m.IsCustom,
+                    m.CreatedAt,
+                    m.UpdatedAt
+                FROM Muscles m
+                WHERE m.IsActive = 1";
+
+            return await db.QueryAsync<Muscle>(query);
+        }
+
         public async Task<IEnumerable<ExerciseMuscleRow>> GetExerciseMusclesAsync(int? exerciseId = null)
         {
             var db = await _dbService.GetConnectionAsync();

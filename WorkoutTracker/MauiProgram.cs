@@ -31,6 +31,9 @@ namespace WorkoutTracker
             builder.Services.AddTransient<ExerciseViewModel>();
             builder.Services.AddTransient<ExercisesListPage>();
 
+            builder.Services.AddTransient<MuscleViewModel>();
+            builder.Services.AddTransient<MusclesListPage>();
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

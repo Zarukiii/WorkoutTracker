@@ -22,5 +22,9 @@
             Title="Exercises"
             ContentTemplate="{DataTemplate views:ExercisesListPage}"
             Route="ExercisesListPage" />
+        <ShellContent
+            Title="Exercises"
+            ContentTemplate="{DataTemplate views:MusclesListPage}"
+            Route="ExercisesListPage" />
     </TabBar>
 </Shell>
