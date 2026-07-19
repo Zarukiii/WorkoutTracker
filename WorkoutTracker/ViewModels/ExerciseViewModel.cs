@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using WorkoutTracker.Repositories.Abstractions;
 using WorkoutTracker.Repositories.Dtos;
 
@@ -45,6 +46,22 @@ namespace WorkoutTracker.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        public async Task ToggleFavoriteAsync(ExerciseListItem exercise)
+        {
+            exercise.IsFavorite = !exercise.IsFavorite;
+
+            try
+            {
+                await _exerciseRepository.SetFavoriteAsync(exercise.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error toggling favorite: {ex.Message}");
+                exercise.IsFavorite = !exercise.IsFavorite;
             }
         }
 

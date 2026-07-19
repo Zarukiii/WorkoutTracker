@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using WorkoutTracker.Models;
 using WorkoutTracker.Repositories.Abstractions;
 
@@ -45,6 +46,22 @@ namespace WorkoutTracker.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        public async Task ToggleFavoriteAsync(Muscle muscle)
+        {
+            muscle.IsFavorite = !muscle.IsFavorite;
+
+            try
+            {
+                await _muscleRepository.SetFavoriteAsync(muscle.Id);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SetFavoriteAsync failed: {ex}");
+                muscle.IsFavorite = !muscle.IsFavorite;
             }
         }
 

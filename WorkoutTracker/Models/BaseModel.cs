@@ -1,8 +1,9 @@
-﻿using SQLite;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SQLite;
 
 namespace WorkoutTracker.Models
 {
-    public abstract class BaseModel
+    public abstract class BaseModel : ObservableObject
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

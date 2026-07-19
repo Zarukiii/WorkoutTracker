@@ -2,9 +2,23 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:WorkoutTracker.Styles"
+             xmlns:vm="clr-namespace:WorkoutTracker.ViewModels"
              x:Class="WorkoutTracker.Views.MusclesListPage"
-             Title="MusclesListPage">
+             Title="Muscles">
     <Grid RowDefinitions="Auto, *, Auto">
+        <Border StrokeShape="RoundRectangle 12"
+                Stroke="Transparent"
+                BackgroundColor="#F2F2F2"
+                Margin="16,8">
+            <SearchBar Text="{Binding SearchText}"
+                       Grid.Row="0"
+                       Placeholder="Search muscle groups"
+                       SearchIconColor="Black"
+                       CancelButtonColor="Black"
+                       TextColor="Black"
+                       Margin="12,0" />
+        </Border>
+
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding Muscles}"
                         SelectionMode="Single"
@@ -13,16 +27,24 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <VerticalStackLayout>
-                        <Grid ColumnDefinitions="Auto, *, Auto"
+                        <Grid ColumnDefinitions="40, *, 24"
                               Padding="16,0"
                               HeightRequest="52"
                               ColumnSpacing="12">
 
                             <Label Grid.Column="0"
-                                   Text="{x:Static local:MaterialIcons.Favorite}"
+                                   Text="{Binding FavoriteGlyph}"
                                    FontFamily="MaterialIcons"
-                                   FontSize="22"
-                                   VerticalOptions="Center" />
+                                   FontSize="20"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MuscleViewModel}}, Path=ToggleFavoriteCommand}"
+                                                          CommandParameter="{Binding .}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
 
                             <Label Grid.Column="1"
                                    Text="{Binding Name}"
@@ -33,7 +55,6 @@
                             <Label Grid.Column="2"
                                    Text="{x:Static local:MaterialIcons.Chevron}"
                                    FontFamily="MaterialIcons"
-                                   FontSize="20"
                                    TextColor="{StaticResource Gray400}"
                                    VerticalOptions="Center" />
                         </Grid>
