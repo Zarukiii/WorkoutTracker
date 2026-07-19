@@ -8,5 +8,6 @@ namespace WorkoutTracker.Repositories.Abstractions
         Task<Exercise> GetDetailsAsync(int exerciseId);
         Task<IEnumerable<ExerciseListItem>> GetExerciseListAsync();
         Task<IEnumerable<ExerciseInstruction>> GetExerciseInstructionsAsync(int? exerciseId = null);
+        Task<bool> SetFavoriteAsync(int exerciseId);
     }
 }

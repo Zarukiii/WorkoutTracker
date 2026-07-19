@@ -8,5 +8,6 @@ namespace WorkoutTracker.Repositories.Abstractions
         Task<IEnumerable<Muscle>> GetAllAsync();
         Task<IEnumerable<Muscle>> GetListAsync();
         Task<IEnumerable<ExerciseMuscleRow>> GetExerciseMusclesAsync(int? exerciseId = null);
+        Task<bool> SetFavoriteAsync(int muscleId);
     }
 }

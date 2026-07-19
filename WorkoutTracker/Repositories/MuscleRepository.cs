@@ -61,5 +61,18 @@ namespace WorkoutTracker.Repositories
 
             return await db.QueryAsync<ExerciseMuscleRow>(query);
         }
+
+        public async Task<bool> SetFavoriteAsync(int muscleId)
+        {
+            var db = await _dbService.GetConnectionAsync();
+
+            string query = @"
+                UPDATE Muscles
+                SET IsFavorite = CASE WHEN IsFavorite = 1 THEN 0 ELSE 1 END
+                WHERE Id = ?";
+
+            int rowsAffected = await db.ExecuteAsync(query, muscleId);
+            return rowsAffected > 0;
+        }
     }
 }
